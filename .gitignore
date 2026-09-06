@@ -1,0 +1,7 @@
+.venv/
+__pycache__/
+seen.sqlite
+.encryption_key
+accounts.yaml
+tokens/
+*.pyc

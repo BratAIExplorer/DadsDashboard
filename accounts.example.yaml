@@ -1,0 +1,22 @@
+# Copy this file to  accounts.yaml  and fill in the values.
+# On first run the secret fields are encrypted in place (via reuse/settings_store.py).
+# accounts.yaml, .encryption_key and tokens/ are gitignored - never commit them.
+
+accounts:
+  - name: Zerodha Main
+    broker: zerodha
+    api_key: ""          # from developers.kite.trade  (app #1)
+    api_secret: ""
+
+  - name: Zerodha 2
+    broker: zerodha
+    api_key: ""          # from developers.kite.trade  (app #2 - separate app)
+    api_secret: ""
+
+  - name: mStock
+    broker: mstock
+    api_key: ""
+    api_secret: ""
+    client_code: ""
+    password: ""
+    totp_secret: ""       # the 2FA secret string, for auto-login

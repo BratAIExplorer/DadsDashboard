@@ -1,0 +1,318 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Deepak's Market Board — Mockup</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Libre+Franklin:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#FBF7EF;
+    --card:#FFFFFF;
+    --ink:#1A1A1A;
+    --ink-soft:#5B5750;
+    --line:#E7DFCF;
+    --accent:#123B6D;
+    --green:#00A651;
+    --red:#E4002B;
+    --amber:#F59E00;
+    --green-bg:#E4F6EC;
+    --red-bg:#FBE4E8;
+    --amber-bg:#FDF1DA;
+    --shadow:0 2px 0 rgba(0,0,0,.04), 0 10px 24px rgba(60,50,30,.08);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:"Libre Franklin",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+    font-size:20px;
+    line-height:1.45;
+    padding:28px clamp(16px,4vw,56px) 64px;
+    max-width:1180px;
+    margin:0 auto;
+  }
+  h1,h2,h3{font-family:"Fraunces",Georgia,serif;font-weight:600;letter-spacing:-.01em;line-height:1.1}
+
+  /* ---------- top bar ---------- */
+  .topbar{
+    display:flex;flex-wrap:wrap;align-items:flex-end;gap:18px 32px;
+    padding-bottom:20px;border-bottom:3px solid var(--ink);
+  }
+  h1{font-size:clamp(34px,5vw,52px)}
+  .topbar .clock{font-size:34px;font-weight:700;font-variant-numeric:tabular-nums;margin-left:auto}
+  .updated{font-size:19px;color:var(--ink-soft);width:100%;display:flex;flex-wrap:wrap;gap:10px 22px;align-items:center}
+  .dot{display:inline-flex;align-items:center;gap:8px;font-weight:600}
+  .dot::before{content:"";width:14px;height:14px;border-radius:50%;background:var(--green)}
+  .dot.bad::before{background:var(--red)}
+
+  .refresh{
+    font-family:inherit;font-size:21px;font-weight:700;
+    background:var(--accent);color:#fff;border:none;border-radius:14px;
+    padding:16px 30px;min-height:58px;cursor:pointer;box-shadow:var(--shadow);
+  }
+  .refresh:active{transform:translateY(2px)}
+
+  .layout{display:grid;grid-template-columns:1fr;gap:34px;margin-top:34px}
+  @media(min-width:940px){.layout{grid-template-columns:1.35fr 1fr}}
+
+  h2{font-size:30px;margin-bottom:16px}
+  .hint{font-size:18px;color:var(--ink-soft);margin-bottom:16px}
+
+  /* ---------- stock cards ---------- */
+  .stock{
+    background:var(--card);border:2px solid var(--line);border-radius:18px;
+    box-shadow:var(--shadow);padding:22px 24px;margin-bottom:16px;
+    display:grid;grid-template-columns:1fr auto;gap:6px 20px;align-items:center;
+  }
+  .stock .name{font-family:"Fraunces",serif;font-size:27px;font-weight:600}
+  .stock .sym{font-size:17px;color:var(--ink-soft);font-weight:600;letter-spacing:.04em}
+  .stock .price{font-size:22px;font-weight:600;font-variant-numeric:tabular-nums}
+  .stock .chg{font-size:19px;font-weight:700}
+  .up{color:var(--green)} .down{color:var(--red)}
+
+  .tag{display:inline-block;font-size:15px;font-weight:800;letter-spacing:.06em;
+    padding:4px 12px;border-radius:8px;text-transform:uppercase;vertical-align:middle;margin-left:10px}
+  .tag-held{background:var(--green-bg);color:#00753A;border:2px solid #9AD9B6}
+  .tag-watch{background:#EDEAE2;color:#6b6355;border:2px solid var(--line)}
+  .posline{grid-column:1;font-size:18px;color:var(--ink-soft);font-weight:500;margin-top:2px}
+  .posline strong{color:var(--ink);font-variant-numeric:tabular-nums}
+  .posline .acct{display:inline-block;background:var(--paper);border:1px solid var(--line);
+    border-radius:6px;padding:1px 8px;font-size:15px;font-weight:700;margin-left:4px}
+  .indline{grid-column:1;margin-top:8px;display:flex;flex-wrap:wrap;gap:8px 10px}
+  .ind{display:inline-flex;align-items:baseline;gap:8px;background:var(--paper);
+    border:2px solid var(--line);border-radius:10px;padding:6px 12px;font-size:17px;font-weight:600}
+  .ind b{font-size:19px;font-variant-numeric:tabular-nums}
+  .ind .good{color:#00753A;font-weight:700}
+  .ind .bad{color:#B4001F;font-weight:700}
+  .ind .mid{color:#6b6355;font-weight:700}
+
+  .verdict{
+    grid-column:2;grid-row:1 / span 3;
+    text-align:right;font-family:"Fraunces",serif;font-weight:700;
+    font-size:clamp(24px,3.4vw,34px);line-height:1.05;white-space:nowrap;
+    padding:10px 16px;border-radius:14px;
+  }
+  .v-vbull{color:#00753A;background:var(--green-bg)}
+  .v-bull {color:#00753A;background:var(--green-bg)}
+  .v-neut {color:#6b6355;background:#F1EAD9}
+  .v-bear {color:#B4001F;background:var(--red-bg)}
+  .v-vbear{color:#B4001F;background:var(--red-bg)}
+  .verdict small{display:block;font-family:"Libre Franklin",sans-serif;font-weight:600;font-size:16px;opacity:.8;margin-top:2px}
+
+  /* ---------- my stocks editor ---------- */
+  .editor{background:var(--card);border:2px dashed var(--accent);border-radius:18px;padding:20px 22px;margin-bottom:30px}
+  .editor form{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:14px}
+  .editor input{
+    flex:1 1 220px;font-family:inherit;font-size:20px;padding:14px 16px;
+    border:2px solid var(--line);border-radius:12px;background:var(--paper);
+  }
+  .editor button{
+    font-family:inherit;font-size:20px;font-weight:700;background:var(--green);color:#fff;
+    border:none;border-radius:12px;padding:14px 26px;min-height:54px;cursor:pointer;
+  }
+  .chips{display:flex;flex-wrap:wrap;gap:10px}
+  .chip{
+    display:inline-flex;align-items:center;gap:12px;background:var(--paper);
+    border:2px solid var(--line);border-radius:999px;padding:8px 10px 8px 20px;font-weight:600;font-size:19px;
+  }
+  .chip button{
+    border:none;background:var(--red);color:#fff;width:42px;height:42px;border-radius:50%;
+    font-size:24px;line-height:1;cursor:pointer;font-family:inherit;
+  }
+  .chip button:active{transform:scale(.92)}
+  .chips-label{font-size:16px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:10px}
+
+  /* ---------- news ---------- */
+  .news{background:var(--card);border:2px solid var(--line);border-radius:18px;box-shadow:var(--shadow);overflow:hidden}
+  .news-item{padding:18px 22px;border-left:10px solid var(--line);border-bottom:1px solid var(--line)}
+  .news-item:last-child{border-bottom:none}
+  .news-item.pos{border-left-color:var(--green)}
+  .news-item.neg{border-left-color:var(--red)}
+  .news-item.neu{border-left-color:var(--amber)}
+  .news-item .head{font-size:20px;font-weight:600;line-height:1.35}
+  .news-item .meta{font-size:16px;color:var(--ink-soft);margin-top:6px;display:flex;flex-wrap:wrap;gap:8px 16px;align-items:center}
+  .badge{background:var(--red);color:#fff;font-size:14px;font-weight:700;letter-spacing:.06em;padding:4px 10px;border-radius:6px}
+  .since{padding:10px 22px;background:var(--paper);font-size:15px;font-weight:700;letter-spacing:.08em;color:var(--ink-soft);text-transform:uppercase}
+
+  /* ---------- sources ---------- */
+  .sources{
+    margin-top:34px;background:var(--card);border:2px solid var(--line);
+    border-radius:18px;box-shadow:var(--shadow);padding:22px 24px;
+  }
+  .sources h2{margin-bottom:14px}
+  .sources table{width:100%;border-collapse:collapse;font-size:18px}
+  .sources td,.sources th{text-align:left;padding:12px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+  .sources th{font-size:15px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-soft)}
+  .sources tr:last-child td{border-bottom:none}
+  .sources .free{color:#00753A;font-weight:700}
+
+  .mocknote{
+    margin-top:40px;font-size:16px;color:var(--ink-soft);text-align:center;
+    border-top:1px solid var(--line);padding-top:18px;
+  }
+</style>
+</head>
+<body>
+
+  <header class="topbar">
+    <h1>Deepak's Market Board</h1>
+    <div class="clock" id="clock">9:47 AM</div>
+    <div class="updated">
+      <button class="refresh" id="refreshBtn">Refresh now</button>
+      <span id="stamp">Updated 9:47 AM</span>
+      <span class="dot">Company news working</span>
+      <span class="dot">NSE / BSE working</span>
+      <span class="dot">Prices working</span>
+    </div>
+  </header>
+
+  <div class="layout">
+
+    <section>
+      <h2>My stocks — how they look today</h2>
+      <p class="hint">Big word tells you the direction. Green = going up, Red = going down.</p>
+      <div id="stockList"></div>
+    </section>
+
+    <section>
+      <h2>My stocks — add or remove</h2>
+      <p class="hint">Type a company name and press <strong>Add</strong>. Press the red ✕ to remove one. Nothing else to change.</p>
+      <div class="editor">
+        <form id="addForm">
+          <input id="addInput" placeholder="e.g. Tata Power" aria-label="Company name to add">
+          <button type="submit">Add</button>
+        </form>
+        <div class="chips-label">Your stocks — tap the red ✕ to remove</div>
+        <div class="chips" id="chips"></div>
+      </div>
+
+      <h2>Latest company news</h2>
+      <p class="hint">Newest at the top. A red <span class="badge">IMPORTANT</span> tag also sends a phone message.</p>
+      <div class="news" id="news"></div>
+    </section>
+
+  </div>
+
+  <section class="sources">
+    <h2>Where this data comes from</h2>
+    <table>
+      <tr><th>What you see</th><th>Source</th><th>Cost</th><th>How fresh</th></tr>
+      <tr><td>Trend word (Bullish / Bearish)</td><td>Price data from Yahoo Finance / NSE, read by the dashboard</td><td class="free">Free</td><td>Every hour</td></tr>
+      <tr><td>RSI &amp; MACD</td><td>Worked out by the dashboard from the price history (same formulas as TradingView)</td><td class="free">Free</td><td>Every hour</td></tr>
+      <tr><td>Company news &amp; filings</td><td>NSE &amp; BSE official announcements (companies must file here first, by law)</td><td class="free">Free</td><td>Every hour</td></tr>
+      <tr><td>News articles</td><td>Google News (Moneycontrol, Economic Times, BQ Prime)</td><td class="free">Free</td><td>Every hour</td></tr>
+      <tr><td>Promoter buying / selling</td><td>NSE bulk &amp; block deals, insider (PIT) disclosures</td><td class="free">Free</td><td>Daily</td></tr>
+      <tr><td>Your positions &amp; profit/loss <em>(later)</em></td><td>Your 3 broker accounts (Zerodha / mStock APIs)</td><td>Zerodha ~₹500/mo each</td><td>Every 1–5 min</td></tr>
+      <tr><td>Phone alerts</td><td>Telegram message bot</td><td class="free">Free</td><td>As it happens</td></tr>
+    </table>
+  </section>
+
+  <p class="mocknote">This is a mockup with made-up numbers, to show layout, font size and colour. No real market data yet.</p>
+
+<script>
+// ---- mock data -------------------------------------------------------------
+const VERDICTS = [
+  {k:'v-vbull', big:'Very Bullish', sub:'▲▲ strong up'},
+  {k:'v-bull',  big:'Bullish',      sub:'▲ going up'},
+  {k:'v-neut',  big:'Neutral',      sub:'● flat'},
+  {k:'v-bear',  big:'Bearish',      sub:'▼ going down'},
+  {k:'v-vbear', big:'Very Bearish', sub:'▼▼ strong down'},
+];
+
+let stocks = [
+  {name:'Avalon Technologies', sym:'AVALON',  price:'₹512.40', chg:'+3.1%', dir:'up',   v:1,
+   held:true,  qty:40, avg:'₹465.00', pnl:'+₹1,896', pnlpct:'+10.2%', pdir:'up',   acct:'Zerodha Main',
+   rsi:68, rsiW:['Getting expensive','mid'], macdW:['Rising — momentum up','good']},
+  {name:'Kernex Microsystems', sym:'KERNEX',  price:'₹1,486.00',chg:'+6.4%', dir:'up',   v:0,
+   held:true,  qty:12, avg:'₹1,610.00',pnl:'-₹1,488', pnlpct:'-7.7%',  pdir:'down', acct:'mStock',
+   rsi:74, rsiW:['Overbought','bad'], macdW:['Rising — momentum up','good']},
+  {name:'Suzlon Energy',       sym:'SUZLON',  price:'₹62.15',  chg:'-1.2%', dir:'down', v:3,
+   held:false,
+   rsi:29, rsiW:['Oversold — looks cheap','good'], macdW:['Falling — momentum down','bad']},
+  {name:'Apollo Micro Systems',sym:'APOLLO',  price:'₹148.90', chg:'+0.3%', dir:'up',   v:2,
+   held:true,  qty:100,avg:'₹150.20', pnl:'-₹130',   pnlpct:'-0.9%',  pdir:'down', acct:'Zerodha 2',
+   rsi:51, rsiW:['Neutral','mid'], macdW:['Flat','mid']},
+];
+
+const news = [
+  {cls:'pos', important:true,  head:'Kernex Microsystems wins ₹120 crore railway signalling order from South Central Railway', src:'NSE filing', time:'10:42 AM'},
+  {cls:'neu', important:false, head:'Avalon Technologies board meeting on 12 Sept to consider Q2 results', src:'BSE filing', time:'9:30 AM'},
+  {cls:'neg', important:true,  head:'Suzlon Energy: promoter pledges additional 1.4% stake', src:'NSE filing', time:'9:05 AM'},
+  {cls:'pos', important:false, head:'Apollo Micro Systems featured in Economic Times defence-manufacturing round-up', src:'Google News', time:'8:20 AM'},
+];
+
+// ---- render --------------------------------------------------------------
+function renderStocks(){
+  document.getElementById('stockList').innerHTML = stocks.map(s=>{
+    const v = VERDICTS[s.v];
+    const tag = s.held
+      ? `<span class="tag tag-held">Held</span>`
+      : `<span class="tag tag-watch">Watching only</span>`;
+    const posline = s.held
+      ? `<div class="posline">${s.qty} shares · bought at <strong>${s.avg}</strong> ·
+          profit/loss <strong class="${s.pdir}">${s.pnl} (${s.pnlpct})</strong>
+          <span class="acct">${s.acct}</span></div>`
+      : `<div class="posline">Not bought — just on the list to watch</div>`;
+    return `<article class="stock">
+      <div class="name">${s.name}${tag}</div>
+      <div class="sym">${s.sym}</div>
+      <div><span class="price">${s.price}</span> <span class="chg ${s.dir}">${s.chg}</span></div>
+      ${posline}
+      <div class="indline">
+        <span class="ind">RSI <b>${s.rsi}</b> <span class="${s.rsiW[1]}">${s.rsiW[0]}</span></span>
+        <span class="ind">MACD <span class="${s.macdW[1]}">${s.macdW[0]}</span></span>
+      </div>
+      <div class="verdict ${v.k}">${v.big}<small>${v.sub}</small></div>
+    </article>`;
+  }).join('');
+}
+
+function renderChips(){
+  document.getElementById('chips').innerHTML = stocks.map((s,i)=>
+    `<span class="chip">${s.name}<button aria-label="Remove ${s.name}" data-i="${i}">✕</button></span>`
+  ).join('');
+}
+
+function renderNews(){
+  document.getElementById('news').innerHTML =
+    `<div class="since">— New since you last looked —</div>` +
+    news.map(n=>`<div class="news-item ${n.cls}">
+      <div class="head">${n.head}</div>
+      <div class="meta">${n.important?'<span class="badge">IMPORTANT</span>':''}<span>${n.src}</span><span>${n.time}</span></div>
+    </div>`).join('');
+}
+
+// ---- interactions -----------------------------------------------------------
+document.getElementById('addForm').addEventListener('submit', e=>{
+  e.preventDefault();
+  const val = document.getElementById('addInput').value.trim();
+  if(!val) return;
+  stocks.push({name:val, sym:val.toUpperCase().replace(/[^A-Z]/g,'').slice(0,6)||'NEW',
+    price:'—', chg:'', dir:'up', v:2, held:false,
+    rsi:'—', rsiW:['Waiting for data','mid'], macdW:['Waiting for data','mid']});
+  document.getElementById('addInput').value='';
+  renderStocks(); renderChips();
+});
+
+document.getElementById('chips').addEventListener('click', e=>{
+  const b = e.target.closest('button'); if(!b) return;
+  stocks.splice(+b.dataset.i,1);
+  renderStocks(); renderChips();
+});
+
+document.getElementById('refreshBtn').addEventListener('click', ()=>{
+  stocks = stocks.map(s=>({...s, v:Math.floor(Math.random()*5)}));
+  const now = new Date().toLocaleTimeString('en-IN',{hour:'numeric',minute:'2-digit'});
+  document.getElementById('stamp').textContent = 'Updated '+now;
+  document.getElementById('clock').textContent = now;
+  renderStocks();
+});
+
+renderStocks(); renderChips(); renderNews();
+</script>
+</body>
+</html>

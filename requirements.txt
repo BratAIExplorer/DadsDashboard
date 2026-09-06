@@ -1,0 +1,22 @@
+# Deepak's Market Board — dependencies
+# Python 3.11 or 3.12  (3.11.9 confirmed working). Not 3.13 yet — some wheels lag.
+# Install from python.org, tick "Add python.exe to PATH".
+#
+#   py -3.12 -m venv .venv
+#   .venv\Scripts\activate
+#   pip install -r requirements.txt
+
+# ---- Phase 0: trend + news board (no broker) ----
+flask>=3.0            # serves the localhost dashboard + setup form (pulls jinja2)
+yfinance>=0.2.40      # prices, history for RSI/MACD, NIFTY/VIX
+pandas>=2.2           # RSI/MACD maths, table building
+requests>=2.31        # NSE/BSE announcements, Google News
+feedparser>=6.0       # Google News RSS
+jugaad-data>=0.25     # NSE corporate announcements without the cookie dance
+openpyxl>=3.1         # write the Desktop .xlsx
+
+# ---- Phase 1: connect the 3 accounts (add later) ----
+kiteconnect>=5.0      # 2x Zerodha
+pyotp>=2.9            # mStock auto TOTP login
+cryptography>=42.0    # encrypt credentials in accounts.yaml
+pyyaml>=6.0           # read accounts.yaml

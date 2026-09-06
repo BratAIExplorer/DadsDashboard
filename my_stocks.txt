@@ -1,0 +1,11 @@
+# Dad's watchlist. One per line:  NSE_SYMBOL | Full company name (used for news search)
+# Edit here or from the "My Stocks" box in the dashboard.
+
+AVALON     | Avalon Technologies
+KERNEX     | Kernex Microsystems
+NETWEB     | Netweb Technologies India
+ROSSTECH   | Rossell Techsys
+DATAPATTNS | Data Patterns India
+IDEA       | Vodafone Idea
+BSE        | BSE Ltd
+SMLMAH     | SML Mahindra
